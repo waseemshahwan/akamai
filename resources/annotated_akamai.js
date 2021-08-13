@@ -415,7 +415,7 @@ var _cf = _cf || [],
             } catch (t) {}
         },
         // returns a fingerprint of the user-agent (every character's charcode added up to a certain number)
-        ab: function(t /* user agent */) {
+        ab: function(t /* user agent or other string */) {
             if (null == t) return -1;
             try {
                 for (var a = 0, e = 0; e < t["length"]; e++) {
