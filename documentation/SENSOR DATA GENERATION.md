@@ -91,7 +91,7 @@ return t + (a << 1) + (e << 2) + (n << 3) + (o << 4) + (m << 5) + (r << 6) + (i 
 
   Is equal to length of navigator plugins or `-1` if plugins is undefined.
 
-  `void 0 !== navigator["plugins"] ? navigator["plugins"]["length"] : -1;`
+  `navigator["plugins"] ? navigator["plugins"]["length"] : -1;`
 
 - `","`
 
@@ -133,61 +133,104 @@ return t + (a << 1) + (e << 2) + (n << 3) + (o << 4) + (m << 5) + (r << 6) + (i 
 
 - `n`
 
-  Is equal to `window.screen?.availWidth? window.screen?.availWidth : -1`
+  Is equal to `window.screen?.availWidth || -1`
 
 - `","`
 
 - `o`
 
-  Is equal to `window.screen?.availHeight ? window.screen?.availHeight : -1`
+  Is equal to `window.screen?.availHeight || -1`
 
 - `","`
 
 - `m`
 
-  Is equal to `window.screen?.width ? window.screen?.width : -1`
+  Is equal to `window.screen?.width || -1`
 
 - `","`
 
 - `r`
 
-  Is equal to `window.screen?.height ? window.screen?.height : -1`
+  Is equal to `window.screen?.height || -1`
 
 - `","`
 
 - `c`
 
+  Is equal to `window.innerWidth || (document.body && "clientWidth" in document.body ? document.body.clientWidth : document.documentElement && "clientWidth" in document.documentElement ? document.documentElement.clientWidth : -1)`
+
 - `","`
 
 - `i`
+
+  Is equal to `window.innerHeight || (document.body && "clientHeight" in document.body ? document.body.clientHeight : document.documentElement && "clientHeight" in document.documentElement ? document.documentElement.clientHeight : -1)`
 
 - `","`
 
 - `b`
 
+  Is equal to `window.outerWidth || -1`
+
 - `","`
 
 - `bmak["bd"]()`
+
+  Array of
+
+  * `",cpen:" + (window.callPhantom ? 1 : 0)`
+  * `"i1:" + (window.ActiveXObject && "ActiveXObject" in window && 1)`
+  * `"dm:" + ("number" == typeof document.documentMode ? 1 : 0)`
+  * `"cwen:" + (window.chrome && window.chrome.webstore ? 1 : 0)`
+  * `"non:" + (navigator.onLine ? 1 : 0)`
+  * `"opc:" + window.opera ? 1 : 0`
+  * `"fc:" + "undefined" != typeof InstallTrigger ? 1 : 0`
+  * `"sc:" + window.HTMLElement && Object.prototype.toString.call(window.HTMLElement).indexOf("Constructor") > 0 ? 1 : 0`
+  * `"wrc:" + ("function" == typeof window.RTCPeerConnection || "function" == typeof window.mozRTCPeerConnection || "function" == typeof window.webkitRTCPeerConnection ? 1 : 0)`
+  * `"isc:" + ("mozInnerScreenY" in window ? window.mozInnerScreenY : 0)`
+  * `"vib:" + ("function" == typeof navigator.vibrate ? 1 : 0)`
+  * `"bat:" + ("function" == typeof navigator.getBattery ? 1 : 0)`
+  * `"x11:" + (Array.prototype.forEach ? 0 : 1)`
+  * `"x12:" + ("FileReader" in window ? 1 : 0)`
+
+  joined by `,`.
 
 - `","`
 
 - `a`
 
+  Is equal to `bmak["ab"](bmak["uar"]())`
+
+  which is:
+
+  user agent char codes sum (ua.charCodeAt(i) for i in range ua.length)
+
+  `-2` for try catch error
+
+  `-1` for null user agent
+
 - `","`
 
 - `k`
+
+  `Math.random() + ""`
 
 - `","`
 
 - `e`
 
+  `bmak["start_ts"] / 2` which is half of Date.now() when (if) it was executed earlier
+
 - `","`
 
 - `bmak["brv"]`
 
+  Is brave? `navigator.brave ? navigator.brave.isBrave().then(i => bmak["brv"] = i ? 1 : 0).catch(_ => bmak["brv"] = 0)`
+
 - `",loc:"`
 
 - `bmak["loc"]`
+
+  A literal empty string `""`
 
 
 
@@ -195,9 +238,31 @@ return t + (a << 1) + (e << 2) + (n << 3) + (o << 4) + (m << 5) + (r << 6) + (i 
 
 ## `i`
 
+Consists of:
+
+* `o`
+
+  `window.DeviceOrientationEvent ? "do_en" : "do_dis"`
+
+* `","`
+
+* `m`
+
+  `window.DeviceMotionEvent ? "dm_en" : "dm_dis"`
+
+* `","`
+
+* `r`
+
+  `window.TouchEvent ? "t_en" : "t_dis"`
+
 ## `"-1,2,-94,-105,"`
 
 ## `bmak["informinfo"]`
+
+`bmak["getforminfo"]()`
+
+``
 
 ## `"-1,2,-94,-102,"`
 
