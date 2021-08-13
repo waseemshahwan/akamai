@@ -545,6 +545,7 @@ var _cf = _cf || [],
                         s = bmak["get_cf_date"]() - bmak["start_ts"],
                         k = bmak["gf"](null),
                         l = 0;
+                              /* keycode is not 0      true                                                        */
                     m && n && (n = 0 != m && 0 != n && m != n ? -1 : 0 != n ? n : m), 0 == i && 0 == c && 0 == b && n >= 32 && (n = 3 == a && n >= 32 && n <= 126 ? -2 : n >= 33 && n <= 47 ? -3 : n >= 112 && n <= 123 ? -4 : -2), k != bmak["prevfid"] ? (bmak["fidcnt"] = 0, bmak["prevfid"] = k) : bmak["fidcnt"] = bmak["fidcnt"] + 1;
                     if (0 == bmak["isIgn"](n)) {
                         var u = bmak["ke_cnt"] + "," + a + "," + s + "," + n + "," + l + "," + d + "," + k;

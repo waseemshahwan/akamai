@@ -262,15 +262,33 @@ Consists of:
 
 `bmak["getforminfo"]()`
 
-``
+TODO: seems like this is empty because it isnt generated until `c` under.
 
 ## `"-1,2,-94,-102,"`
 
-\9. `c`
+## `c`
 
-\10. `"-1,2,-94,-108,"`
+`bmak["getforminfo"]()`
 
-\11. `bmak["kact"]`
+`TODO`
+
+## `"-1,2,-94,-108,"`
+
+## `bmak["kact"]`
+
+mouse events. kact is added onto after every click.
+
+is possibly is:
+
+`bmak["ke_cnt"] + "," + a + "," + s + "," + n + "," + l + "," + d + "," + k;`
+
+>  `ke_cnt is key count, +1 for every click, starts at 0`
+
+> `a` is `1` for keydown or onkeydown, `2` for keyup or onkeyup, `3` for keypress or onkeypress
+
+> `s` is `Date.now() - bmak["start_ts"]`
+
+> `n` is 
 
 \12. `"-1,2,-94,-110,"`
 
