@@ -22,7 +22,7 @@ Version of akamai script. Can be found as first property of `bmak` at the top of
 
 
 
-## `bmak['gd']()`
+## `n` or `bmak['gd']()`
 
 
 
@@ -276,11 +276,13 @@ TODO: seems like this is empty because it isnt generated until `c` under.
 
 ## `bmak["kact"]`
 
-mouse events. kact is added onto after every click.
+key events. kact is added onto after every key down / up / press.
+
+`ke_cnt_lmt` is hardcoded at 150. Dont send more than 150 events in sensor data.
 
 is possibly is:
 
-`bmak["ke_cnt"] + "," + a + "," + s + "," + n + "," + l + "," + d + "," + k;`
+`u = bmak["ke_cnt"] + "," + a + "," + s + "," + n + "," + l + "," + d + "," + k;`
 
 >  `ke_cnt is key count, +1 for every click, starts at 0`
 
@@ -288,19 +290,103 @@ is possibly is:
 
 > `s` is `Date.now() - bmak["start_ts"]`
 
-> `n` is 
+> `n` is `-2` for normal key, and the key code for meta keys, ctrl keys, etc (TODO)
+
+> `l` is always `0`
+
+> `d` is ` 8 * (ev.shiftKey ? 1 : 0) + 4 * (ev.ctrlKey ? 1 : 0) + 2 * (ev.metaKey ? 1 : 0) + (ev.altKey ? 1 : 0)`
+
+> `k` is `bmak.gf(null)` which gets `bmak.ab(document.activeElement)` or `-1` if activeElement is `null`.
+
+` ev.isTrusted != undefined && !ev.isTrusted && (u += ",0")`
+
+`u += ";"`
+
+`bmak["kact"] += u`
+
+Note: for autofill, this is the corresponding key events from **chrome**:
+
+```
+1,2,6646,undefined,0,0,-1;
+2,1,6647,undefined,0,0,-1;
+3,2,6648,undefined,0,0,-1;
+```
 
 ## `"-1,2,-94,-110,"`
 
 ## `bmak["mact"]`
 
-mouse events
+mouse events. mact is updated on mousedown, mouseup, mousemove.
+
+
+
+`mme_cnt_lmt` is hardcoded at `100`. Don't send more than 100.
+
+`mduce_cnt_lmt` is hardcoded at `75`. ^
+
+`mme_cnt` is mouse movement event count
+
+`mduce_cnt` is mouse down up click event count
+
+`ev` is the mouse event itself
+
+`a` is `1` for mouse movement, `2` for mouse click, `3` for mouse down, `4` for mouse up
+
+`n = Math.floor(pageX || clientX)`
+
+`o = Math.floor(pageY || clientY)`
+
+`m = ev.toElement || ev.target`
+
+`r` is `document.activeElement` hash using `bmak.ab`
+
+`i` is time since `start_ts` in ms
+
+`c` is `bmak["me_cnt"] + "," + a + "," + i + "," + n + "," + o`
+
+if event is NOT mouse move, then
+
+> `c` is `c + ',' + r`
+>
+> `b` is `ev.which` or `ev.button`
+>
+> `b != null && b != 1 && (c = c + ',' + b)`
+
+if `event.isTrusted` is `false` then
+
+> `c += ,it0`
+
+`c += ';'`
+
+`bmak["mact"] = bmak["mact"] + c`
 
 ## `"-1,2,-94,-117,"`
 
 ## `bmak["tact"]`
 
-touch events
+touch events.
+
+`tme_cnt` is touch move event
+
+`tduce_cnt` is touch down up cancel event i think
+
+`a` is `1` for touchmove, `2` for touchstart, `3` for touchend, `4` for touchcancel
+
+`e` is event
+
+`n` is `e.pageX || e.clientX` floored
+
+`o` is `e.pageY || e.clientY` floored
+
+`m` is time since `start_ts`
+
+`r = bmak["te_cnt"] + "," + a + "," + m + "," + n + "," + o`
+
+if `e.isTrusted` is `false`, `r += ',0'`
+
+`r += ';'`
+
+`bmak["tact"] += r`
 
 ## `"-1,2,-94,-111,"`
 
@@ -308,11 +394,59 @@ touch events
 
 device orientation events
 
+only send max of two events per touch event (`doa_throttle` is reset every touch event, and it has to be less than 2 to continue this event)
+
+`doe_cnt_lmt` is 10.
+
+`a` is time since `start_ts` in ms.
+
+`e` is `parseFloat(event.alpha).toFixed(2)`
+
+`n` is `parseFloat(event.beta).toFixed(2)`
+
+`o` is `parseFloat(event.gamma).toFixed(2)`
+
+`m = bmak["doe_cnt"] + "," + a + "," + e + "," + n + "," + o`
+
+if `isTrusted` is false, `m += ',0'`
+
+`bmak["doact"] += m + ';'`
+
+
+
 ## `"-1,2,-94,-109,"`
 
 ## `bmak["dmact"]`
 
-device motion
+device motion events
+
+only send max of two events per touch event (`dma_throttle` is reset every touch event, and it has to be less than 2 to continue this event)
+
+`dme_cnt_lmt` is 10.
+
+`t` is event
+
+`a` is time since `start_ts`
+
+if `t.acceleration` otherwise `e = -1, n = -1, o = -1`
+
+> `e` is `parseFloat(t.acceleration.x).toFixed(2)`
+>
+> `n` is `parseFloat(t.acceleration.y).toFixed(2)`
+>
+> `o` is `parseFloat(t.acceleration.z).toFixed(2)`
+
+if `t.accelerationIncludingGravity` otherwise `m = -1, r = -1, i = -1`
+
+> `m` is `parseFloat(t.accelerationIncludingGravity.x).toFixed(2)`
+>
+> `r` is `parseFloat(t.accelerationIncludingGravity.y).toFixed(2)`
+>
+> `i` is `parseFloat(t.accelerationIncludingGravity.z).toFixed(2)`
+
+if `t.rotationRate`
+
+> `c`
 
 ## `"-1,2,-94,-114,"`
 
