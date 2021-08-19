@@ -448,7 +448,7 @@ var _cf = _cf || [],
             bmak["o9"] = a * e;
         },
         jrs: function(t) {
-            for (var a = Math["floor"](1e5 * Math["random"]() + 1e4), e = String(t * a), n = 0, o = [], m = e["length"] >= 18; o["length"] < 6;) o["push"](parseInt(e["slice"](n, n + 2))), n = m ? n + 3 : n + 2;
+            for (var a = Math["floor"](1e5 * Math["random"]() + 1e4), e = String(t * a), n = 0, o = [], m = e["length"] >= 18; o["length"] < 6;) o["push"]( parseInt( e["slice"](n, n + 2) ) ), n = m ? n + 3 : n + 2;
             return [a, bmak["cal_dis"](o)];
         },
         fm: function() {

@@ -304,6 +304,14 @@ is possibly is:
 
 `bmak["kact"] += u`
 
+
+
+`ke_vel` will be used in the future. This is how it works.
+
+`bmak["ke_vel"] = bmak["ke_vel"] + bmak["ke_cnt"] + a + s + n + d + k`
+
+
+
 Note: for autofill, this is the corresponding key events from **chrome**:
 
 ```
@@ -359,6 +367,12 @@ if `event.isTrusted` is `false` then
 `c += ';'`
 
 `bmak["mact"] = bmak["mact"] + c`
+
+
+
+`me_vel` will be used later.
+
+`bmak["me_vel"] = bmak["me_vel"] + bmak["me_cnt"] + a + i + n + o`
 
 ## `"-1,2,-94,-117,"`
 
@@ -444,41 +458,308 @@ if `t.accelerationIncludingGravity` otherwise `m = -1, r = -1, i = -1`
 >
 > `i` is `parseFloat(t.accelerationIncludingGravity.z).toFixed(2)`
 
-if `t.rotationRate`
+if `t.rotationRate` otherwise `c = -1, b = -1, d = -1`
 
-> `c`
+> `c` is `parseFloat(t.rotationRate.alpha).toFixed(2)`
+>
+> `b` is `parseFloat(t.rotationRate.beta).toFixed(2)`
+>
+> `d` is `parseFloat(t.rotationRate.gamma).toFixed(2)`
+
+
+
+`s = bmak["dme_cnt"] + "," + a + "," + e + "," + n + "," + o + "," + m + "," + r + "," + i + "," + c + "," + b + "," + d`
+
+if `t.isTrusted` is false
+
+> `s += ',0'`
+
+`bmak["dmact"] = bmak["dmact"] + s + ";"`
 
 ## `"-1,2,-94,-114,"`
 
 ## `bmak["pact"]`
 
-pointer events
+pointer events. stylus. useless. no one uses these.
 
 ## `"-1,2,-94,-103,"`
 
 ## `bmak["vcact"]`
 
-on blur, on focus
+`vc_cnt_lmt` is hardcoded at 100.
+
+`t` is `1` for visibilitychange, `2` for onblur, `3` for onfocus
+
+`a` is time since `start_ts` in ms.
+
+`e = t + "," + a + ";"`
+
+`bmak["vcact"] = bmak["vcact"] + e`
 
 ## `"-1,2,-94,-112,"`
 
-## `b`
+## `b` or `bmak["getdurl"]()`
+
+`bmak["enReadDocUrl"] ? document["URL"]["replace"](/\\|"/g, "") : "";`
+
+`enReadDocUrl` is `1` for nike akamai.
 
 ## `"-1,2,-94,-115,"`
 
 ## `w`
 
+Consists of (joined with commas):
+
+- `bmak["ke_vel"] + 1`
+
+  >  Refer to [Key Events](#)
+
+- `bmak["me_vel"] + 32`
+
+  > Refer to [Mouse Events](#)
+
+- `bmak["te_vel"] + 32`
+
+  > Refer to [Touch Events](#)
+
+- `bmak["doe_vel"]`
+
+  > Refer to [Device Orientation Events](#)
+
+- `bmak["dme_vel"]`
+
+  >  Refer to [Device Motion Events](#)
+
+- `bmak["pe_vel"]`
+
+  >  Refer to [Pointer Events](#)
+  >
+  > This can probably just be `0` because no pointer events are needed. *Not confirmed*
+
+- `s`
+
+  >  `bmak["ke_vel"] + bmak["me_vel"] + bmak["doe_vel"] + bmak["dme_vel"] + bmak["te_vel"] + bmak["pe_vel"]`
+
+- `a` or `bmak["updatet"]()`
+
+  > `bmak["get_cf_date"]() - bmak["start_ts"]`
+  >
+  > time since `start_ts` in ms
+
+- `bmak["init_time"]`
+
+  > set by `_setInitTime` which seems to never be called. so `0`
+
+- `bmak["start_ts"]`
+
+  > Time of start
+
+- `bmak["fpcf"]["td"]`
+
+  >  TODO
+
+- `bmak["d2"]`
+
+  > `bmak["pi"](bmak["z1"] / 23)`
+  >
+  > `parseInt(bmak["z1"] / 23)`
+  >
+  > `z1` can be found [here](#-or-)
+
+- `bmak["ke_cnt"]`
+
+  > Count of all key events.
+
+- `bmak["me_cnt"]`
+
+  > Count of all mouse events.
+
+- `f`
+
+  > `bmak["pi"](bmak["d2"] / 6)`
+  >
+  > `parseInt(bmak["d2"] / 6)`
+  >
+  > `d2` can be found [here](#-or-)
+
+- `bmak["pe_cnt"]`
+
+  > Count of all pointer events. Can be `0` if no pointer events used.
+
+- `bmak["te_cnt"]`
+
+  > Count of all touch events.
+
+- `_`
+
+  > `bmak["get_cf_date"]() - bmak["start_ts"]`
+  >
+  > again?
+
+- `bmak["ta"]`
+
+  > Sum of all "time since start_ts" variables from all events
+
+- `bmak["n_ck"]`
+
+  >  `"0"` if no cookie (`_abck`) exists, `"1"` if it does.
+
+- `e`
+
+  > `_abck` cookie if exists, if not, `2` for `bm` and `1` for `!bm`. TODO: what is bm?
+
+- `bmak["ab"](e)`
+
+  > Char code sum of `e` above
+
+- `bmak["fpcf"]["rVal"]`
+
+  > TODO
+
+- `bmak["fpcf"]["rCFP"]`
+
+  > TODO
+
+- `p` or `bmak["fas"]()`
+
+  > Refer to code snippet below
+
+  ```js
+  Boolean(navigator["credentials"]) +
+      (Boolean(navigator["appMinorVersion"]) << 1) +
+      (Boolean(navigator["bluetooth"]) << 2) +
+      (Boolean(navigator["storage"]) << 3) +
+      (Boolean(Math["imul"]) << 4) +
+      (Boolean(navigator["getGamepads"]) << 5) +
+      (Boolean(navigator["getStorageUpdates"]) << 6) +
+      (Boolean(navigator["hardwareConcurrency"]) << 7) +
+      (Boolean(navigator["mediaDevices"]) << 8) +
+      (Boolean(navigator["mozAlarms"]) << 9) +
+      (Boolean(navigator["mozConnection"]) << 10) +
+      (Boolean(navigator["mozIsLocallyAvailable"]) << 11) +
+      (Boolean(navigator["mozPhoneNumberService"]) << 12) +
+      (Boolean(navigator["msManipulationViewsEnabled"]) << 13) +
+      (Boolean(navigator["permissions"]) << 14) +
+      (Boolean(navigator["registerProtocolHandler"]) << 15) +
+      (Boolean(navigator["requestMediaKeySystemAccess"]) << 16) +
+      (Boolean(navigator["requestWakeLock"]) << 17) +
+      (Boolean(navigator["sendBeacon"]) << 18) +
+      (Boolean(navigator["serviceWorker"]) << 19) +
+      (Boolean(navigator["storeWebWideTrackingException"]) << 20) +
+      (Boolean(navigator["webkitGetGamepads"]) << 21) +
+      (Boolean(navigator["webkitTemporaryStorage"]) << 22) +
+      (Boolean(Number["parseInt"]) << 23) +
+      (Boolean(Math["hypot"]) << 24)
+  ```
+
+- `l`
+
+  ```js
+  String.fromCharCode(80) +
+      String.fromCharCode(105) +
+      String.fromCharCode(90) +
+      String.fromCharCode(116) +
+      String.fromCharCode(69)
+  ```
+
+- `u[0]`
+
+  ```js
+  // Random number between 1e4 and 1e5 + 1e4
+  let t_start_ts = Date.now(); // should be time of start
+  let a_random = Math.floor(Math.random() * 1e5 + 1e4);
+  let e_random_str = String(a_random + t_start_ts);
+  let n = 0;
+  let o = [];
+  let m = e_random_str.length >= 18;
+  
+  for(;o.length < 6;) {
+      o.push(parseInt(e_random_str.slice(n, n + 2)));
+      n = (m ? n + 3 : n + 2);
+  }
+  
+  let result;
+  
+  {
+      let a = o[0] - o[1];
+      let e = o[2] - o[3];
+      let n = o[4] - o[5];
+      result = Math.floor(
+          Math.sqrt(a * a * e * e * n * n)
+      )
+  }
+  
+  return [ a_random, result ]
+  ```
+
+- `u[1]`
+
+  >  Refer to above function.
+
+- `v`
+
+  ```js
+  Boolean(window["__nightmare"]) +
+      (Boolean(window["cdc_adoQpoasnfa76pfcZLmcfl_Array"]) << 1) +
+      (Boolean(window["cdc_adoQpoasnfa76pfcZLmcfl_Promise"]) << 2) +
+      (Boolean(window["cdc_adoQpoasnfa76pfcZLmcfl_Symbol"]) << 3) +
+      (Boolean(window["OSMJIF"]) << 4) +
+      (Boolean(window["_Selenium_IDE_Recorder"]) << 5) +
+      (Boolean(window["__$webdriverAsyncExecutor"]) << 6) +
+      (Boolean(window["__driver_evaluate"]) << 7) +
+      (Boolean(window["__driver_unwrapped"]) << 8) +
+      (Boolean(window["__fxdriver_evaluate"]) << 9) +
+      (Boolean(window["__fxdriver_unwrapped"]) << 10) +
+      (Boolean(window["__lastWatirAlert"]) << 11) +
+      (Boolean(window["__lastWatirConfirm"]) << 12) +
+      (Boolean(window["__lastWatirPrompt"]) << 13) +
+      (Boolean(window["__phantomas"]) << 14) +
+      (Boolean(window["__selenium_evaluate"]) << 15) +
+      (Boolean(window["__selenium_unwrapped"]) << 16) +
+      (Boolean(window["__webdriverFuncgeb"]) << 17) +
+      (Boolean(window["__webdriver__chr"]) << 18) +
+      (Boolean(window["__webdriver_evaluate"]) << 19) +
+      (Boolean(window["__webdriver_script_fn"]) << 20) +
+      (Boolean(window["__webdriver_script_func"]) << 21) +
+      (Boolean(window["__webdriver_script_function"]) << 22) +
+      (Boolean(window["__webdriver_unwrapped"]) << 23) +
+      (Boolean(window["awesomium"]) << 24) +
+      (Boolean(window["callSelenium"]) << 25) +
+      (Boolean(window["calledPhantom"]) << 26) +
+      (Boolean(window["calledSelenium"]) << 27) +
+      (Boolean(window["domAutomationController"]) << 28) +
+      (Boolean(window["watinExpressionError"]) << 29) +
+      (Boolean(window["watinExpressionResult"]) << 30) +
+      (Boolean(window["spynner_additional_js_loaded"]) << 31) +
+      (Boolean(document["$chrome_asyncScriptInfo"]) << 32) +
+      (Boolean(window["fmget_targets"]) << 33) +
+      (Boolean(window["geb"]) << 34)
+  ```
+
+  
+
+- `h`
+
+  `navigator["webdriver"] ? navigator["webdriver"] : -1`
+
 ## `"-1,2,-94,-106,"`
 
 ## `d`
+
+TODO
 
 ## `"-1,2,-94,-119,"`
 
 ## `bmak["mr"]`
 
+Performance time checks of all math functions. TODO
+
 ## `"-1,2,-94,-122,"`
 
 ## `S`
+
+
+
 ## `"-1,2,-94,-123,"`
 ## `B`
 ## `"-1,2,-94,-124,"`
